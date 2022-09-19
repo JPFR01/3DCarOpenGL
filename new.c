@@ -95,8 +95,60 @@ void drawFloor(){
 
 }
 
+void drawHouse(){
+	glColor3f(0.0f, 1.0f, 1.0f);
+	
+	/* glPushMatrix(); //Inicia Carro, base
+	glTranslatef(120, -20.0, -80);
+    glScalef (40,40,40);
+	glutSolidCube(1.0);
+	glPopMatrix(); */
+
+	glPushMatrix();
+	glTranslatef(120, -20.0, -80);
+	glBegin(GL_TRIANGLES);           // Begin drawing the pyramid with 4 triangles
+	
+      // Front
+      glColor3f(1.0f, 0.0f, 0.0f);     // Red
+      glVertex3f( 0.0f, 1.0f, 0.0f);
+      glColor3f(0.0f, 1.0f, 0.0f);     // Green
+      glVertex3f(-1.0f, -1.0f, 1.0f);
+      glColor3f(0.0f, 0.0f, 1.0f);     // Blue
+      glVertex3f(1.0f, -1.0f, 1.0f);
+ 
+      // Right
+      glColor3f(1.0f, 0.0f, 0.0f);     // Red
+      glVertex3f(0.0f, 1.0f, 0.0f);
+      glColor3f(0.0f, 0.0f, 1.0f);     // Blue
+      glVertex3f(1.0f, -1.0f, 1.0f);
+      glColor3f(0.0f, 1.0f, 0.0f);     // Green
+      glVertex3f(1.0f, -1.0f, -1.0f);
+ 
+      // Back
+      glColor3f(1.0f, 0.0f, 0.0f);     // Red
+      glVertex3f(0.0f, 1.0f, 0.0f);
+      glColor3f(0.0f, 1.0f, 0.0f);     // Green
+      glVertex3f(1.0f, -1.0f, -1.0f);
+      glColor3f(0.0f, 0.0f, 1.0f);     // Blue
+      glVertex3f(-1.0f, -1.0f, -1.0f);
+ 
+      // Left
+      glColor3f(1.0f,0.0f,0.0f);       // Red
+      glVertex3f( 0.0f, 1.0f, 0.0f);
+      glColor3f(0.0f,0.0f,1.0f);       // Blue
+      glVertex3f(-1.0f,-1.0f,-1.0f);
+      glColor3f(0.0f,1.0f,0.0f);       // Green
+      glVertex3f(-1.0f,-1.0f, 1.0f);
+   glEnd();   // Done drawing the pyramid
+
+	glPopMatrix();
+
+}
+
 void drawCar(GLfloat azimuth){
 
+
+	/* glTranslatef(azimuth*0.5, 0.0, 0.0); */ /* para o carro andar de um lado para outro */
 	glPushMatrix(); //Inicia Carro, base
 	glTranslatef(15.0, -20.0, -5.0);
     glScalef (4,0.7,1.6);
@@ -142,6 +194,7 @@ glEnd();
     glScalef (2,2,2);
     /* raio interior, raio exterior */
     glTranslatef(20.0, -12.5, -11.5);
+	glRotatef(-azimuth,0,0,1);
     glutSolidTorus(1,3,100,100);
 
 	glTranslatef(-2.0, 0, 0);
@@ -159,6 +212,7 @@ glEnd();
     glScalef (2,2,2);
     /* raio interior, raio exterior */
     glTranslatef(-5.0, -12.5, 6.5);
+	glRotatef(-azimuth,0,0,1);
     glutSolidTorus(1,3,100,100);
 
 	/* fazendo reta da roda */
@@ -177,6 +231,7 @@ glEnd();
     glScalef (2,2,2);
     /* raio interior, raio exterior */
     glTranslatef(-5.0, -12.5, -11.5);
+	glRotatef(-azimuth,0,0,1);
     glutSolidTorus(1,3,100,100);
 
 	/* fazendo reta da roda */
@@ -227,6 +282,8 @@ void display(void)
 
 	glColor3f(1.0f, 0.0f, 0.0f);
     drawCar(azimuth);
+
+	drawHouse();
 
     
     glColor3f(1.0f, 1.0f, 0.0f);
