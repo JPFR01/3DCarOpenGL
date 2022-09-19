@@ -31,6 +31,7 @@
 #include <stdlib.h>
 
 // Variáveis para controles de navegação
+GLfloat azimuth = 0;
 
 GLfloat angle, fAspect;
 
@@ -94,8 +95,8 @@ void drawFloor(){
 
 }
 
-void drawCar(){
-	
+void drawCar(GLfloat azimuth){
+
 	glPushMatrix(); //Inicia Carro, base
 	glTranslatef(15.0, -20.0, -5.0);
     glScalef (4,0.7,1.6);
@@ -111,16 +112,22 @@ void drawCar(){
 
     
 	glColor3f(0.0f, 0.0f, 0.0f);
+
+	
 	glPushMatrix();
 
 	
     glScalef (2,2,2);
+	
     /* raio interior, raio exterior */
+	
     glTranslatef(20.0, -12.5, 6.5);
+	glRotatef(-azimuth,0,0,1);
     glutSolidTorus(1,3,100,100);
 
 	/* fazendo reta da roda */
 	glTranslatef(-2.0, 0, 0.5);
+	
 	
 	glBegin(GL_LINES);
   glVertex3f(0.0f, 0.0f, 0.0f);
@@ -219,7 +226,7 @@ void display(void)
     drawFloor();
 
 	glColor3f(1.0f, 0.0f, 0.0f);
-    drawCar();
+    drawCar(azimuth);
 
     
     glColor3f(1.0f, 1.0f, 0.0f);
@@ -303,6 +310,11 @@ void TeclasEspeciais(int tecla, int x, int y)
 	switch (tecla)
 
 	{
+
+	case GLUT_KEY_LEFT:  azimuth -=10;   break;
+
+        case GLUT_KEY_RIGHT: azimuth +=10;   break;
+
 
 	case GLUT_KEY_HOME:
 		if (angle >= 10)
