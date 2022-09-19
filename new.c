@@ -33,6 +33,8 @@
 // Variáveis para controles de navegação
 GLfloat azimuth = 0;
 
+GLfloat wasd = 0;
+
 GLfloat angle, fAspect;
 
 GLfloat rotX, rotY, rotX_ini, rotY_ini;
@@ -163,15 +165,55 @@ void drawTree(){
 
 }
 
-void drawChar(GLfloat azimuth){
+void drawChar(GLfloat wasd){
 
 
-	 glTranslatef(azimuth*0.5, 0.0, 0.0);   /* para o carro andar de um lado para outro */
-	/* glRotatef(-azimuth,0,1,0); */  /* DK = drift king */
-	glPushMatrix(); //Inicia Carro, base
-	glTranslatef(75.0, -20.0, -5.0);
-    glScalef (0.7,0.7,0.7);
+	   /* para o personagem andar de um lado para outro */
+	glPushMatrix();
+	glTranslatef(wasd*0.5, 0.0, -33.0);
+
+	glPushMatrix(); //Inicia personagem, base
+	glColor3f(0.2,0.2,0.2);
+	glTranslatef(75.0, -10.0, -5.0);
+	 
+    glScalef (0.7,0.7,0.4);
 	glutSolidCube(20.0);
+	glPopMatrix();
+
+	glPushMatrix(); //Inicia personagem, base
+	glColor3f(0.2,0.2,0.2);
+	glTranslatef(75.0, 0.0, -5.0);
+	 
+    glScalef (0.3,0.3,0.3);
+	glutSolidCube(20.0);
+	glPopMatrix();
+
+	glPushMatrix(); //Inicia personagem, roda
+	glColor3f(0,0,0);
+	glTranslatef(75.0, -20.0, 0.0); 
+	glRotatef(-wasd,0,0,1);
+    glutSolidTorus(1,3,100,100);
+	glBegin(GL_LINES);
+  	glVertex3f(0.0f, 0.0f, 0.0f);
+  	glVertex3f(5.0f, 0.0f, 0.0f);
+	glEnd();
+	
+	glPopMatrix();
+
+	glPushMatrix(); //Inicia personagem, roda
+	glColor3f(0,0,0);
+
+	glTranslatef(75.0, -20.0, -10.0); 
+	glRotatef(-wasd,0,0,1);
+    glutSolidTorus(1,3,100,100);
+	glBegin(GL_LINES);
+  	glVertex3f(0.0f, 0.0f, 0.0f);
+  	glVertex3f(5.0f, 0.0f, 0.0f);
+	glEnd();
+	
+	glPopMatrix();
+	glPopMatrix();
+
 	glPopMatrix();
 }
 
@@ -179,7 +221,7 @@ void drawCar(GLfloat azimuth){
 
 
 	 glTranslatef(azimuth*0.5, 0.0, 0.0);   /* para o carro andar de um lado para outro */
-	/* glRotatef(-azimuth,0,1,0); */  /* DK = drift king */
+	 /* glRotatef(-azimuth,0,1,0); */   /* DK = drift king */
 	glPushMatrix(); //Inicia Carro, base
 	glTranslatef(15.0, -20.0, -5.0);
     glScalef (4,0.7,1.6);
@@ -320,8 +362,8 @@ void display(void)
 	glColor3f(0.16f, 0.11f, 0.07f);
 	drawTree();
 
-	/* glColor3f(0.0f, 1.0f, 1.0f);
-	drawChar(azimuth); */
+	glColor3f(0.0f, 1.0f, 1.0f);
+	drawChar(wasd); 
 
     
     glColor3f(1.0f, 1.0f, 0.0f);
@@ -405,6 +447,10 @@ void TeclasEspeciais(int tecla, int x, int y)
 	switch (tecla)
 
 	{
+
+	case GLUT_KEY_PAGE_UP:  wasd +=10;   break;
+
+	case GLUT_KEY_PAGE_DOWN:  wasd -=10;   break;
 
 	case GLUT_KEY_LEFT:  azimuth -=10;   break;
 
