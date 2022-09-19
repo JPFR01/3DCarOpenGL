@@ -47,17 +47,17 @@ void DefineIluminacao(void)
 
 {
 
-	GLfloat luzAmbiente[4] = {0.2, 0.2, 0.2, 1.0};
+	GLfloat luzAmbiente[4] = {1.5, 1.5, 1.5, 1.0};
 
 	GLfloat luzDifusa[4] = {0.7, 0.7, 0.7, 1.0}; // "cor"
 
 	GLfloat luzEspecular[4] = {1.0, 1.0, 1.0, 1.0}; // "brilho"
 
-	GLfloat posicaoLuz[4] = {0.0, 50.0, 50.0, 1.0};
+	GLfloat posicaoLuz[4] = {90.0+0.5*azimuth,77.5,0, 1.0}; /* mesma do sol */
 
 	// Capacidade de brilho do material
 
-	GLfloat especularidade[4] = {1.0, 1.0, 1.0, 1.0};
+	GLfloat especularidade[4] = {0.3, 0.3, 0.3, 0.3};
 
 	GLint especMaterial = 60;
 
@@ -84,71 +84,102 @@ void DefineIluminacao(void)
 	glLightfv(GL_LIGHT0, GL_POSITION, posicaoLuz);
 }
 
+
+void DefineIluminacaoFosco(void)
+
+{
+
+	GLfloat luzAmbiente[4] = {1.5, 1.5, 1.5, 1.0};
+
+	GLfloat luzDifusa[4] = {0.7, 0.7, 0.7, 1.0}; // "cor"
+
+	GLfloat luzEspecular[4] = {1.0, 1.0, 1.0, 1.0}; // "brilho"
+
+	/* GLfloat posicaoLuz[4] = {90.0+0.5*azimuth,77.5,0, 1.0}; */ /* mesma do sol */
+
+	// Capacidade de brilho do material
+
+	GLfloat especularidade[4] = {0, 0, 0, 0};
+
+	GLint especMaterial = 60;
+
+	// Define a refletância do material
+
+	glMaterialfv(GL_FRONT, GL_SPECULAR, especularidade);
+
+	// Define a concentração do brilho
+
+	glMateriali(GL_FRONT, GL_SHININESS, especMaterial);
+
+	// Ativa o uso da luz ambiente
+
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, luzAmbiente);
+
+	// Define os parâmetros da luz de número 0
+
+	glLightfv(GL_LIGHT0, GL_AMBIENT, luzAmbiente);
+
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, luzDifusa);
+
+	glLightfv(GL_LIGHT0, GL_SPECULAR, luzEspecular);
+
+	/* glLightfv(GL_LIGHT0, GL_POSITION, posicaoLuz); */
+}
+
 // Função callback de redesenho da janela de visualização
 
 void drawFloor(){
+	// Define a refletância do chao
+	
+	
 	glPushMatrix(); //Inicia Carro, base
+	
 	glTranslatef(0, -32, 0);
-    glScalef (400,0.7,400);
+    glScalef (4000,0.7,400);
 	glutSolidCube(1.0);
 	glPopMatrix();
 
 }
 
-void drawHouse(){
-	glColor3f(0.0f, 1.0f, 1.0f);
+void drawTree(){
 	
-	/* glPushMatrix(); //Inicia Carro, base
-	glTranslatef(120, -20.0, -80);
-    glScalef (40,40,40);
-	glutSolidCube(1.0);
-	glPopMatrix(); */
 
 	glPushMatrix();
-	glTranslatef(120, -20.0, -80);
-	glBegin(GL_TRIANGLES);           // Begin drawing the pyramid with 4 triangles
 	
-      // Front
-      glColor3f(1.0f, 0.0f, 0.0f);     // Red
-      glVertex3f( 0.0f, 1.0f, 0.0f);
-      glColor3f(0.0f, 1.0f, 0.0f);     // Green
-      glVertex3f(-1.0f, -1.0f, 1.0f);
-      glColor3f(0.0f, 0.0f, 1.0f);     // Blue
-      glVertex3f(1.0f, -1.0f, 1.0f);
- 
-      // Right
-      glColor3f(1.0f, 0.0f, 0.0f);     // Red
-      glVertex3f(0.0f, 1.0f, 0.0f);
-      glColor3f(0.0f, 0.0f, 1.0f);     // Blue
-      glVertex3f(1.0f, -1.0f, 1.0f);
-      glColor3f(0.0f, 1.0f, 0.0f);     // Green
-      glVertex3f(1.0f, -1.0f, -1.0f);
- 
-      // Back
-      glColor3f(1.0f, 0.0f, 0.0f);     // Red
-      glVertex3f(0.0f, 1.0f, 0.0f);
-      glColor3f(0.0f, 1.0f, 0.0f);     // Green
-      glVertex3f(1.0f, -1.0f, -1.0f);
-      glColor3f(0.0f, 0.0f, 1.0f);     // Blue
-      glVertex3f(-1.0f, -1.0f, -1.0f);
- 
-      // Left
-      glColor3f(1.0f,0.0f,0.0f);       // Red
-      glVertex3f( 0.0f, 1.0f, 0.0f);
-      glColor3f(0.0f,0.0f,1.0f);       // Blue
-      glVertex3f(-1.0f,-1.0f,-1.0f);
-      glColor3f(0.0f,1.0f,0.0f);       // Green
-      glVertex3f(-1.0f,-1.0f, 1.0f);
-   glEnd();   // Done drawing the pyramid
+	glTranslatef(120, -20.0, -80);
+	glScalef (0.6,7,0.6);
+	glutSolidCube(20.0);
 
 	glPopMatrix();
 
+	DefineIluminacao();
+	glPushMatrix();
+	
+	glTranslatef(120, 40.0, -80);
+	glColor3f(0,1,0);
+	glutSolidSphere(40,40,40);
+
+	glPopMatrix();
+
+}
+
+void drawChar(GLfloat azimuth){
+
+
+	 glTranslatef(azimuth*0.5, 0.0, 0.0);   /* para o carro andar de um lado para outro */
+	/* glRotatef(-azimuth,0,1,0); */  /* DK = drift king */
+	glPushMatrix(); //Inicia Carro, base
+	glTranslatef(75.0, -20.0, -5.0);
+    glScalef (0.7,0.7,0.7);
+	glutSolidCube(20.0);
+	glPopMatrix();
 }
 
 void drawCar(GLfloat azimuth){
 
 
-	/* glTranslatef(azimuth*0.5, 0.0, 0.0); */ /* para o carro andar de um lado para outro */
+	 glTranslatef(azimuth*0.5, 0.0, 0.0);   /* para o carro andar de um lado para outro */
+	/* glRotatef(-azimuth,0,1,0); */  /* DK = drift king */
 	glPushMatrix(); //Inicia Carro, base
 	glTranslatef(15.0, -20.0, -5.0);
     glScalef (4,0.7,1.6);
@@ -265,7 +296,7 @@ void display(void)
 
 	// Chama a função que especifica os parâmetros de iluminação
 
-	DefineIluminacao();
+	
 
 	// Altera a cor do desenho para azul
 
@@ -277,19 +308,26 @@ void display(void)
 
     glTranslatef( 0.0, 0.0, 0.0);
 
+	DefineIluminacaoFosco();
 	glColor3f(0.0f, 1.0f, 0.0f);
-    drawFloor();
 
+    drawFloor();
+	DefineIluminacao();
 	glColor3f(1.0f, 0.0f, 0.0f);
     drawCar(azimuth);
 
-	drawHouse();
+	DefineIluminacaoFosco();
+	glColor3f(0.16f, 0.11f, 0.07f);
+	drawTree();
+
+	/* glColor3f(0.0f, 1.0f, 1.0f);
+	drawChar(azimuth); */
 
     
     glColor3f(1.0f, 1.0f, 0.0f);
     glPushMatrix();//Sol inicia
 
-    glTranslatef(90.0,77.5,0);
+    glTranslatef(90.0+0.5*azimuth,77.5,0);
     glutSolidSphere(20.0,100,100);
 
     glPopMatrix(); //Fim Sol
