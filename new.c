@@ -59,7 +59,7 @@ void DefineIluminacao(void)
 
 	// Capacidade de brilho do material
 
-	GLfloat especularidade[4] = {0.3, 0.3, 0.3, 0.3};
+	GLfloat especularidade[4] = {0.1, 0.1, 0.1, 0.1};
 
 	GLint especMaterial = 60;
 
@@ -229,20 +229,94 @@ void drawChar(GLfloat wasd){
 	glPopMatrix();
 }
 
+void drawInsideWheel(){ /* fazendo linhas dentro da roda */
+
+glPushMatrix();
+glColor3f(0.3,0.3,0.3);
+	glBegin(GL_LINES);
+  glVertex3f(0.0f, 0.0f, 0.0f);
+  glVertex3f(5.0f, 0.0f, 0.0f);
+glEnd();
+
+glTranslatef(2,-2,0);
+glRotatef(90,0,0,1);
+glBegin(GL_LINES);
+  glVertex3f(0.0f, 0.0f, 0.0f);
+  glVertex3f(5.0f, 0.0f, 0.0f);
+glEnd();
+
+glTranslatef(2,-2,0);
+glRotatef(90,0,0,1);
+glBegin(GL_LINES);
+  glVertex3f(0.0f, 0.0f, 0.0f);
+  glVertex3f(5.0f, 0.0f, 0.0f);
+glEnd();
+glPopMatrix();
+}
+
 void drawCar(GLfloat azimuth){
 
+	
 
 	 glTranslatef(azimuth*0.5, 0.0, 0.0);   /* para o carro andar de um lado para outro */
 	 /* glRotatef(-azimuth,0,1,0); */   /* DK = drift king */
 	glPushMatrix(); //Inicia Carro, base
 	glTranslatef(15.0, -20.0, -5.0);
-    glScalef (4,0.7,1.6);
+    glScalef (3.9,0.7,1.6);
 	glutSolidCube(20.0);
 	glPopMatrix();
+
+	glPushMatrix(); //base frontal
+	glTranslatef(-24, -20.2, -5.0);
+    glRotatef(30,0,0,1);
+    glScalef (0.4,0.6,1.6);
+	glutSolidCube(20.0);
+	glPopMatrix();
+
+	glPushMatrix(); //base traseira
+	glTranslatef(53, -20.2, -5.0);
+    glRotatef(-36,0,0,1);
+    glScalef (0.3,0.7,1.6);
+	glutSolidCube(20.0);
+	glPopMatrix();
+
     /* parte de cima */
 	glPushMatrix(); 
 	glTranslatef(20.0, -10, -5.0);
+	glRotatef(2,0,0,1);
     glScalef (2,0.5,1.6);
+	glutSolidCube(20.0);
+	glPopMatrix();
+
+	glPushMatrix(); /* janela traseira */
+	glColor3f(0.7,0.7,0.7); 
+	glTranslatef(42.0, -11.5, -5.0);
+	glRotatef(35,0,0,1);
+    glScalef (0.20,0.7,1.4);
+	glutSolidCube(20.0);
+	glPopMatrix();
+
+	glPushMatrix(); /* janela frontal */
+	glColor3f(0.7,0.7,0.7); 
+	glTranslatef(-2, -11, -5.0);
+	glRotatef(-40,0,0,1);
+    glScalef (0.25,0.45,1.4);
+	glutSolidCube(20.0);
+	glPopMatrix();
+
+	glPushMatrix(); /* janela lateral */
+	glColor3f(0.7,0.7,0.7); 
+	glTranslatef(10, -9, -5.0);
+	glRotatef(2,0,0,1);
+    glScalef (0.7,0.28,1.7);
+	glutSolidCube(20.0);
+	glPopMatrix();
+
+	glPushMatrix(); /* janela lateral  2*/
+	glColor3f(0.7,0.7,0.7); 
+	glTranslatef(28, -8.5, -5.0);
+	glRotatef(2,0,0,1);
+    glScalef (0.7,0.28,1.7);
 	glutSolidCube(20.0);
 	glPopMatrix();
 
@@ -257,7 +331,7 @@ void drawCar(GLfloat azimuth){
     glScalef (2,2,2);
 	
     /* raio interior, raio exterior */
-	
+	glColor3f(0,0,0);
     glTranslatef(20.0, -12.5, 6.5);
 	glRotatef(-azimuth,0,0,1);
     glutSolidTorus(1,3,100,100);
@@ -266,10 +340,7 @@ void drawCar(GLfloat azimuth){
 	glTranslatef(-2.0, 0, 0.5);
 	
 	
-	glBegin(GL_LINES);
-  glVertex3f(0.0f, 0.0f, 0.0f);
-  glVertex3f(5.0f, 0.0f, 0.0f);
-glEnd();
+	drawInsideWheel();
 	
 	glPopMatrix();
 
@@ -277,6 +348,7 @@ glEnd();
 
 	
     glScalef (2,2,2);
+	glColor3f(0,0,0);
     /* raio interior, raio exterior */
     glTranslatef(20.0, -12.5, -11.5);
 	glRotatef(-azimuth,0,0,1);
@@ -284,10 +356,7 @@ glEnd();
 
 	glTranslatef(-2.0, 0, 0);
 	
-	glBegin(GL_LINES);
-  glVertex3f(0.0f, 0.0f, 0.0f);
-  glVertex3f(5.0f, 0.0f, 0.0f);
-glEnd();
+	drawInsideWheel();
 	
 	glPopMatrix();
 
@@ -295,6 +364,7 @@ glEnd();
 
 	
     glScalef (2,2,2);
+	glColor3f(0,0,0);
     /* raio interior, raio exterior */
     glTranslatef(-5.0, -12.5, 6.5);
 	glRotatef(-azimuth,0,0,1);
@@ -303,10 +373,7 @@ glEnd();
 	/* fazendo reta da roda */
 	glTranslatef(-2, 0, 0.5);
 	
-	glBegin(GL_LINES);
-  glVertex3f(0.0f, 0.0f, 0.0f);
-  glVertex3f(5.0f, 0.0f, 0.0f);
-glEnd();
+	drawInsideWheel();
 	
 	glPopMatrix();
 
@@ -314,6 +381,7 @@ glEnd();
 
 	
     glScalef (2,2,2);
+	glColor3f(0,0,0);
     /* raio interior, raio exterior */
     glTranslatef(-5.0, -12.5, -11.5);
 	glRotatef(-azimuth,0,0,1);
@@ -321,10 +389,7 @@ glEnd();
 
 	/* fazendo reta da roda */
 	glTranslatef(-2, 0, 0);
-	glBegin(GL_LINES);
-  glVertex3f(0.0f, 0.0f, 0.0f);
-  glVertex3f(5.0f, 0.0f, 0.0f);
-glEnd();
+	drawInsideWheel();
 	
 	glPopMatrix();
 
