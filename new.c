@@ -186,7 +186,7 @@ void drawChar(GLfloat wasd){
 
 	glPushMatrix(); //Inicia personagem, base
 	glColor3f(0.2,0.2,0.2);
-	glTranslatef(75.0, -10.0, -5.0);
+	glTranslatef(75.0, -18.0, -5.0);
 	 
     glScalef (0.7,0.7,0.4);
 	glutSolidCube(20.0);
@@ -194,7 +194,7 @@ void drawChar(GLfloat wasd){
 
 	glPushMatrix(); //Inicia personagem, base
 	glColor3f(0.2,0.2,0.2);
-	glTranslatef(75.0, 0.0, -5.0);
+	glTranslatef(75.0, -8.0, -5.0);
 	 
     glScalef (0.3,0.3,0.3);
 	glutSolidCube(20.0);
@@ -202,7 +202,7 @@ void drawChar(GLfloat wasd){
 
 	glPushMatrix(); //Inicia personagem, roda
 	glColor3f(0,0,0);
-	glTranslatef(75.0, -20.0, 0.0); 
+	glTranslatef(75.0, -28.0, 0.0); 
 	glRotatef(-wasd,0,0,1);
     glutSolidTorus(1,3,100,100);
 	glBegin(GL_LINES);
@@ -215,7 +215,7 @@ void drawChar(GLfloat wasd){
 	glPushMatrix(); //Inicia personagem, roda
 	glColor3f(0,0,0);
 
-	glTranslatef(75.0, -20.0, -10.0); 
+	glTranslatef(75.0, -28.0, -10.0); 
 	glRotatef(-wasd,0,0,1);
     glutSolidTorus(1,3,100,100);
 	glBegin(GL_LINES);
@@ -565,10 +565,11 @@ void GerenciaMovim(int x, int y)
 		int deltay = y_ini - y;
 
 		// E modifica ângulos
-
+		
 		rotY = rotY_ini - deltax / SENS_ROT;
-
-		rotX = rotX_ini - deltay / SENS_ROT;
+		/* adicionando trava para nao passar do chao */
+		if(rotX_ini - deltay / SENS_ROT > -5){
+		rotX = rotX_ini - deltay / SENS_ROT;}
 	}
 
 	// Botão direito ?
