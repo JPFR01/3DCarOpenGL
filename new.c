@@ -143,6 +143,18 @@ void drawFloor(){
 
 }
 
+void drawCloud(GLfloat xvalue, GLfloat zvalue){
+	glPushMatrix();
+
+	glTranslatef(xvalue,80, zvalue);
+	glutSolidSphere(20, 10, 10);
+	glTranslatef(20,5,0);
+	glutSolidSphere(18, 10, 10);
+	glTranslatef(20,0,0);
+	glutSolidSphere(18, 10, 10);
+	glPopMatrix();
+}
+
 void drawTree(){
 	
 
@@ -353,7 +365,7 @@ void display(void)
 	DefineIluminacaoFosco();
 	glColor3f(0.0f, 1.0f, 0.0f);
 
-    drawFloor();
+    drawFloor(); 
 	DefineIluminacao();
 	glColor3f(1.0f, 0.0f, 0.0f);
     drawCar(azimuth);
@@ -375,6 +387,26 @@ void display(void)
     glPopMatrix(); //Fim Sol
 
     glPopMatrix(); //Fim carro/sol
+
+	/* desenhando nuvem */
+	glColor3f(1,1,1);
+	drawCloud(0, -80);
+
+	drawCloud(20, -80);
+
+
+	glRotatef(90,0,1,0);
+	drawCloud(20, -90);
+
+	drawCloud(0, 80);
+
+	
+
+	drawCloud(-60, 50);
+
+	drawCloud(50, 30);
+
+	drawCloud(-100, -20);
 
     glPopMatrix();
 
