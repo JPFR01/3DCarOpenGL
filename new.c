@@ -33,6 +33,8 @@
 // Variáveis para controles de navegação
 GLfloat azimuth = 0;
 
+GLfloat turn = 0;
+
 GLfloat wasd = 0;
 
 GLfloat angle, fAspect;
@@ -232,33 +234,57 @@ void drawChar(GLfloat wasd){
 void drawInsideWheel(){ /* fazendo linhas dentro da roda */
 
 glPushMatrix();
-glColor3f(0.3,0.3,0.3);
-	glBegin(GL_LINES);
-  glVertex3f(0.0f, 0.0f, 0.0f);
-  glVertex3f(5.0f, 0.0f, 0.0f);
-glEnd();
+glColor3f(0.16,0.16,0.16);
 
-glTranslatef(2,-2,0);
-glRotatef(90,0,0,1);
-glBegin(GL_LINES);
+glPushMatrix();
+glTranslatef(2,-0.25,-1);
+	glScalef (3,0.5,0.5);
+	glutSolidCube(2.0);
+glPopMatrix();
+	/* glBegin(GL_LINES);
   glVertex3f(0.0f, 0.0f, 0.0f);
   glVertex3f(5.0f, 0.0f, 0.0f);
-glEnd();
+glEnd(); */
+glPushMatrix();
+glRotatef(90,0,0,1);
+glScalef (3,0.5,0.5);
+glTranslatef(0,-4,-1);
 
-glTranslatef(2,-2,0);
-glRotatef(90,0,0,1);
-glBegin(GL_LINES);
-  glVertex3f(0.0f, 0.0f, 0.0f);
-  glVertex3f(5.0f, 0.0f, 0.0f);
-glEnd();
+	/* glScalef (3,0.5,0.5); */
+	glutSolidCube(2.0);
+glPopMatrix();
+
+glPushMatrix();
+glRotatef(45,0,0,1);
+glScalef (3,0.3,0.5);
+glTranslatef(0.5,-5.2,-1.2);
+
+	/* glScalef (3,0.5,0.5); */
+	glutSolidCube(2.0);
+glPopMatrix();
+
+glPushMatrix();
+glRotatef(-45,0,0,1);
+glScalef (3,0.3,0.5);
+glTranslatef(0.5,4.4,-1.2);
+
+	/* glScalef (3,0.5,0.5); */
+	glutSolidCube(2.0);
+glPopMatrix();
+
 glPopMatrix();
 }
 
 void drawCar(GLfloat azimuth){
 
+	/* glutSetKeyRepeat(1); */
+	/* if(azimuth !=0){ */
+	 /* glRotatef(turn*0.5, 0,1,0); */
 	
-
-	 glTranslatef(azimuth*0.5, 0.0, 0.0);   /* para o carro andar de um lado para outro */
+	 glTranslatef(azimuth*0.5, 0.0, 0.0);
+	 
+	 
+	 /* } */   /* para o carro andar de um lado para outro */
 	 /* glRotatef(-azimuth,0,1,0); */   /* DK = drift king */
 	glPushMatrix(); //Inicia Carro, base
 	glTranslatef(15.0, -20.0, -5.0);
@@ -332,7 +358,10 @@ void drawCar(GLfloat azimuth){
 	
     /* raio interior, raio exterior */
 	glColor3f(0,0,0);
+	
     glTranslatef(20.0, -12.5, 6.5);
+	
+	
 	glRotatef(-azimuth,0,0,1);
     glutSolidTorus(1,3,100,100);
 
@@ -350,11 +379,12 @@ void drawCar(GLfloat azimuth){
     glScalef (2,2,2);
 	glColor3f(0,0,0);
     /* raio interior, raio exterior */
+	
     glTranslatef(20.0, -12.5, -11.5);
 	glRotatef(-azimuth,0,0,1);
     glutSolidTorus(1,3,100,100);
 
-	glTranslatef(-2.0, 0, 0);
+	glTranslatef(-1.5, 0, 1);
 	
 	drawInsideWheel();
 	
@@ -367,6 +397,8 @@ void drawCar(GLfloat azimuth){
 	glColor3f(0,0,0);
     /* raio interior, raio exterior */
     glTranslatef(-5.0, -12.5, 6.5);
+	
+	glRotatef(0, 0,1,0);
 	glRotatef(-azimuth,0,0,1);
     glutSolidTorus(1,3,100,100);
 
@@ -384,11 +416,11 @@ void drawCar(GLfloat azimuth){
 	glColor3f(0,0,0);
     /* raio interior, raio exterior */
     glTranslatef(-5.0, -12.5, -11.5);
-	glRotatef(-azimuth,0,0,1);
+	
     glutSolidTorus(1,3,100,100);
 
 	/* fazendo reta da roda */
-	glTranslatef(-2, 0, 0);
+	glTranslatef(-2, 0, 1);
 	drawInsideWheel();
 	
 	glPopMatrix();
@@ -552,6 +584,10 @@ void TeclasEspeciais(int tecla, int x, int y)
 	case GLUT_KEY_LEFT:  azimuth -=10;   break;
 
         case GLUT_KEY_RIGHT: azimuth +=10;   break;
+
+		case GLUT_KEY_UP :  turn -=10; azimuth -=0.5;    break;
+
+        case GLUT_KEY_DOWN : turn +=10; azimuth -=0.5;  break;
 
 
 	case GLUT_KEY_HOME:
